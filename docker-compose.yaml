@@ -1,0 +1,23 @@
+services:
+  web:
+    build: .
+    container_name: my-app
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+    environment:
+      - FLASK_ENV=development
+      - FLASK_DEBUG=1
+    # Команда запуска Flask уже указана в Dockerfile (CMD)
+
+  test:
+    build: .
+    container_name: my-app-test
+    volumes:
+      - .:/app
+    environment:
+      - FLASK_ENV=testing
+    command: pytest tests/ -v
+    profiles:
+      - test
